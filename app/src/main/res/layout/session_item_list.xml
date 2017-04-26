@@ -19,20 +19,20 @@
 
         <TextView
                 android:text=""
-                android:textSize="13sp"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_customer_mobile"/>
 
         <TextView
                 android:text=" sdf"
-                android:textSize="13sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_cust_name"/>
         <TextView
                 android:text=""
-                android:textSize="11sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_cust_pax"/>
@@ -47,14 +47,14 @@
 
         <TextView
                 android:text=""
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_tno"
                 android:layout_gravity="end"/>
 
         <TextView
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -62,15 +62,102 @@
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:layout_gravity="end"/>
-       <!-- <ImageView
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ic_accept"
+            android:visibility="gone"
+            android:layout_gravity="end">
+        <ImageView
                 android:adjustViewBounds="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="18dp"
+                android:paddingRight="2dp"
                 android:tint="@color/aluminum"
-                android:id="@+id/txt_status"
-                android:src="@drawable/ic_expected_status"
-                android:layout_gravity="end"/>-->
-
+                android:src="@drawable/ic_done_black_24dp"
+        />
+        <TextView
+                android:textSize="11sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accepted"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+        />
     </LinearLayout>
 
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ic_confirm"
+            android:visibility="gone"
+            android:layout_gravity="end">
+        <ImageView
+                android:adjustViewBounds="true"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:paddingRight="2dp"
+                android:tint="@color/aluminum"
+                android:src="@drawable/ic_done_all_black_24dp"
+        />
+        <TextView
+                android:textSize="11sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmed"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+        />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ic_approved"
+            android:visibility="gone"
+            android:layout_gravity="end">
+        <ImageView
+                android:adjustViewBounds="true"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:tint="@color/aluminum"
+                android:paddingRight="2dp"
+                android:src="@drawable/ic_thumb_up_black_24dp"
+        />
+        <TextView
+                android:textSize="11sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assigned"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+        />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ic_declined"
+            android:visibility="gone"
+            android:layout_gravity="end">
+        <ImageView
+                android:adjustViewBounds="true"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:tint="@color/aluminum"
+                android:paddingRight="2dp"
+                android:src="@drawable/decline"
+        />
+        <TextView
+                android:textSize="11sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Declined"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+        />
+    </LinearLayout>
 </LinearLayout>

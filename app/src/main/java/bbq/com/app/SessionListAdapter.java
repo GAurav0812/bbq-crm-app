@@ -51,12 +51,12 @@ public class SessionListAdapter extends BaseAdapter {
         TextView pax = (TextView) listView.findViewById(R.id.txt_cust_pax);
         TextView customerMobile = (TextView) listView.findViewById(R.id.txt_customer_mobile);
         TextView tno = (TextView) listView.findViewById(R.id.txt_tno);
-        TextView customerStatus = (TextView) listView.findViewById(R.id.txt_status);
+        TextView status = (TextView) listView.findViewById(R.id.txt_status);
         customerName.setText(CustomerInfoObject.getCustomerName());
         pax.setText(CustomerInfoObject.getPAX());
         customerMobile.setText(CustomerInfoObject.getMobileNo());
         tno.setText(CustomerInfoObject.getTNo());
-        customerStatus.setText(CustomerInfoObject.getStatus());
+        status.setText(CustomerInfoObject.getStatus());
         return listView;
     }
 }

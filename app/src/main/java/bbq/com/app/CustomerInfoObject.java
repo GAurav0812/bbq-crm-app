@@ -9,8 +9,8 @@ import android.os.Parcelable;
 public class CustomerInfoObject implements Parcelable {
     private String CustomerName;
     private String MobileNo;
-    private String PAX;
     private String ETA;
+    private String PAX;
     private String TNo;
     private String Status;
     private String Flag;
@@ -164,11 +164,11 @@ public class CustomerInfoObject implements Parcelable {
 
 
 
-    public CustomerInfoObject(String customerName, String mobileNo, String PAX , String ETA, String status, String record) {
+    public CustomerInfoObject(String customerName, String mobileNo, String ETA, String PAX, String status, String record) {
         CustomerName = customerName;
         MobileNo = mobileNo;
-        this.PAX = PAX;
         this.ETA = ETA;
+        this.PAX = PAX;
         Status = status;
         Record = record;
     }

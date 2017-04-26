@@ -1,5 +1,6 @@
 package bbq.com.app;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -37,8 +38,8 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tabLayout.setTabTextColors(Color.parseColor("#ffffff"), Color.parseColor("#4cefe7"));
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         String address = "reservation.json";
@@ -133,10 +134,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                     ArrayList<CustomerInfoObject> customerInfoObjectArrayList = new ArrayList<CustomerInfoObject>();
                     for (int c = 0; c < customerJSONList.length(); c++) {
                         JSONObject customerObject = customerJSONList.getJSONObject(c);
-                        CustomerInfoObject customerInfoObject = new CustomerInfoObject(customerObject.getString("CustomerName"),
-                                customerObject.getString("MobileNo"),customerObject.getString("PAX"),
-                                customerObject.getString("ETA"),customerObject.getString("Status"),
-                                customerObject.getString("Record"));
+                        CustomerInfoObject customerInfoObject = new CustomerInfoObject(customerObject.getString("CustomerName"),customerObject.getString("MobileNo"),customerObject.getString("PAX"),customerObject.getString("ETA"),customerObject.getString("Status"),customerObject.getString("Record"));
                         customerInfoObjectArrayList.add(customerInfoObject);
                     }
                     newObject.setCustomers(customerInfoObjectArrayList);
