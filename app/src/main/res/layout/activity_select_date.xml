@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@drawable/bg"
+        tools:context="com.app.bbq.samiksha.ChooseTableActivity">
+
+
+    <LinearLayout
+            android:id="@+id/headsection"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:weightSum="1">
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15" android:clickable="false"></RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:layout_weight="0.70">
+
+            <ImageView
+                    android:id="@+id/imagelogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo"
+                    android:tint="@color/white"/>
+
+
+
+
+
+            <TextView
+                    android:id="@+id/textstoreid"
+                    android:layout_marginTop="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:textSize="30sp"
+                    android:text="OUTLET_NAME_HERE"
+                    android:layout_below="@+id/imagelogo"
+                    android:layout_centerHorizontal="true"/>
+
+            <TextView
+                    android:id="@+id/textchoose"
+                    android:layout_marginTop="18dp"
+                    android:layout_below="@+id/textstoreid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/aluminum"
+                    android:textSize="22sp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Choose Table Number"/>
+
+
+            <RelativeLayout
+                    android:layout_width="240dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal|center"
+                    android:id="@+id/spinner_cont"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/textchoose"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_centerHorizontal="true"
+            >
+
+                <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+            </RelativeLayout>
+            <Button
+                    android:id="@+id/btnProceed"
+                    android:layout_below="@+id/spinner_cont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="PROCEED"
+                    style="@style/AppTheme.Button"
+            />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15" android:clickable="false"></RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
