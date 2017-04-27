@@ -79,7 +79,7 @@ public class ConfigureActivity extends AppCompatActivity implements AsyncRequest
     public void asyncResponse(String response, String label) {
         if (response != null && response.contains("SUCCESS")) {
             sessionManager.configureStore(response);
-            Intent intent = new Intent(getApplicationContext(), SelectDateActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
             startActivity(intent);
         } else {
             showError("Error occurred while retrieving data!");

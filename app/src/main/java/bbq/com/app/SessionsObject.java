@@ -1,15 +1,15 @@
 package bbq.com.app;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+        import android.os.Parcel;
+        import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
 /**
  * Created by System4 on 4/20/2017.
  */
-public class SessionsObject implements Parcelable{
+public class SessionsObject implements Parcelable {
     private String Slot;
     private String SlotStartTime;
     private String SlotEndTime;
@@ -62,6 +62,7 @@ public class SessionsObject implements Parcelable{
         super();
         readFromParcel(in);
     }
+
     public static final Parcelable.Creator<SessionsObject> CREATOR = new Parcelable.Creator<SessionsObject>() {
         public SessionsObject createFromParcel(Parcel in) {
             return new SessionsObject(in);
@@ -73,12 +74,14 @@ public class SessionsObject implements Parcelable{
         }
 
     };
+
     public void readFromParcel(Parcel in) {
         Slot = in.readString();
         SlotStartTime = in.readString();
         SlotEndTime = in.readString();
 
     }
+
     public int describeContents() {
         return 0;
     }
@@ -89,7 +92,10 @@ public class SessionsObject implements Parcelable{
         dest.writeString(SlotEndTime);
     }
 
-    public SessionsObject(String slot) {
+    public SessionsObject(String slot, String slotStartTime, String slotEndTime) {
         Slot = slot;
+        SlotStartTime = slotStartTime;
+        SlotEndTime = slotEndTime;
     }
+
 }

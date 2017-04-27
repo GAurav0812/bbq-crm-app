@@ -164,12 +164,15 @@ public class CustomerInfoObject implements Parcelable {
 
 
 
-    public CustomerInfoObject(String customerName, String mobileNo, String ETA, String PAX, String status, String record) {
+    public CustomerInfoObject(String customerName, String mobileNo, String ETA, String PAX, String status, String record,String TNo,String Flag,String Occassion) {
         CustomerName = customerName;
         MobileNo = mobileNo;
         this.ETA = ETA;
         this.PAX = PAX;
         Status = status;
         Record = record;
+        this.TNo = TNo;
+        this.Flag = Flag;
+        this.Occassion = Occassion;
     }
 }

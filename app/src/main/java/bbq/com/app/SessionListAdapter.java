@@ -51,12 +51,29 @@ public class SessionListAdapter extends BaseAdapter {
         TextView pax = (TextView) listView.findViewById(R.id.txt_cust_pax);
         TextView customerMobile = (TextView) listView.findViewById(R.id.txt_customer_mobile);
         TextView tno = (TextView) listView.findViewById(R.id.txt_tno);
-        TextView status = (TextView) listView.findViewById(R.id.txt_status);
+        TextView occasion = (TextView) listView.findViewById(R.id.txt_occasion);
+
         customerName.setText(CustomerInfoObject.getCustomerName());
         pax.setText(CustomerInfoObject.getPAX());
         customerMobile.setText(CustomerInfoObject.getMobileNo());
         tno.setText(CustomerInfoObject.getTNo());
-        status.setText(CustomerInfoObject.getStatus());
+        occasion.setText(CustomerInfoObject.getOccassion());
+        listView.findViewById(R.id.ic_arrived).setVisibility(View.GONE);
+        listView.findViewById(R.id.ic_expected).setVisibility(View.GONE);
+        listView.findViewById(R.id.ic_seated).setVisibility(View.GONE);
+        listView.findViewById(R.id.ic_cancel).setVisibility(View.GONE);
+        if (CustomerInfoObject.getStatus().equals("Arrived")) {
+            listView.findViewById(R.id.ic_arrived).setVisibility(View.VISIBLE);
+        }
+        if (CustomerInfoObject.getStatus().equals("Expected") ) {
+            listView.findViewById(R.id.ic_expected).setVisibility(View.VISIBLE);
+        }
+        if (CustomerInfoObject.getStatus().equals("Seated")) {
+            listView.findViewById(R.id.ic_seated).setVisibility(View.VISIBLE);
+        }
+        if (CustomerInfoObject.getStatus().equals("Cancel")) {
+            listView.findViewById(R.id.ic_cancel).setVisibility(View.VISIBLE);
+        }
         return listView;
     }
 }

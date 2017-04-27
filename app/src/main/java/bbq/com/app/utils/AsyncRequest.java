@@ -21,9 +21,10 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
     String label;
     String _preloaderString = "Loading data...";
     public static final String app_url = "http://webquiz.brainbout.in/";
-    //public static final String app_url = "http://feedback.bnhl.in/rest/";
-    //public static final String app_url = "http://bbq.theuniquemedia.in/rest/";
+    public static final String crm_url = "http://crm.bnhl.in/CRMProfile/profileui/#/";
 
+    //public static final String app_url = "http://feedback.bnhl.in/rest/";
+    //public static final String app_url = "http://bbq.theuniquemedia.in/rest/"
     public AsyncRequest(Activity a, String m, String l) {
         caller = (OnAsyncRequestComplete) a;
         context = a;
@@ -36,6 +37,7 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
         context = a;
         method = m;
     }
+
     public AsyncRequest(OnAsyncRequestComplete al, Activity a, String m, String l) {
         caller = al;
         context = a;
@@ -57,6 +59,7 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
     public void setPreloaderString(String _preloaderString) {
         this._preloaderString = _preloaderString;
     }
+
     // Interface to be implemented by calling activity
     public interface OnAsyncRequestComplete {
         public void asyncResponse(String response, String label);
@@ -89,8 +92,8 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
         pDialog.setCancelable(false);
         pDialog.setMessage(_preloaderString); // typically you will define such
         // strings in a remote file.
-        if(!_preloaderString.equals(""))
-        pDialog.show();
+        if (!_preloaderString.equals(""))
+            pDialog.show();
     }
 
     public void onProgressUpdate(Integer... progress) {
@@ -114,12 +117,16 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
 
     @SuppressWarnings("deprecation")
     private String get(String address) {
+        String[] crmAddress = address.split("-");
         String jsonString = new String();
-
+        URL url;
         try {
             HttpURLConnection urlConnection = null;
-
-            URL url = new URL(app_url + address);
+            if (crmAddress.length > 1) {
+                url = new URL(crm_url + address);
+            } else {
+                url = new URL(app_url + address);
+            }
 
             urlConnection = (HttpURLConnection) url.openConnection();
 

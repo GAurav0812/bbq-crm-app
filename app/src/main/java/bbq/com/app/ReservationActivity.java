@@ -1,5 +1,7 @@
 package bbq.com.app;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
@@ -8,7 +10,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import bbq.com.app.utils.AsyncRequest;
 import org.json.JSONArray;
@@ -16,10 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
-public class ReservationActivity extends AppCompatActivity implements AsyncRequest.OnAsyncRequestComplete {
+public class ReservationActivity extends AppCompatActivity implements AsyncRequest.OnAsyncRequestComplete, View.OnClickListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -27,11 +35,16 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     ArrayList<SessionsObject> sessionObjectArrayList;
     ArrayList<CustomerInfoObject> customerInfoObjectArrayList;
     private String[] title;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    String txtDate;
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ImageView date;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_view);
+
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
@@ -39,13 +52,17 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabTextColors(Color.parseColor("#ffffff"), Color.parseColor("#4cefe7"));
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
+        date = (ImageView) findViewById(R.id.ic_calender);
+        date.setOnClickListener(this);
         String address = "reservation.json";
         AsyncRequest requestList = new AsyncRequest(ReservationActivity.this, "GET");
         requestList.execute(address);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -64,12 +81,33 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         for (int i = 0; i < title.length; i++) {
             Bundle bundle = new Bundle();
 
-            bundle.putParcelableArrayList("customerObjectArrayList",sessionObjectArrayList.get(i).getCustomers());
+            bundle.putParcelableArrayList("customerObjectArrayList", sessionObjectArrayList.get(i).getCustomers());
             ReservationListFragment sessionIndex = new ReservationListFragment();
             sessionIndex.setArguments(bundle);
             adapter.addFragment(sessionIndex, sessionObjectArrayList.get(i).getSlot());
             viewPager.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year,
+                                  int monthOfYear, int dayOfMonth) {
+
+                txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+            }
+        }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -102,6 +140,11 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_reservation_screen_settings, menu);
+        return true;
+    }
 
 /*    private void loadInfo(){
         String address = "reservation.json" ;
@@ -124,17 +167,16 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                 for (int i = 0; i < reservationJSONList.length(); i++) {
                     JSONObject reservationObject = reservationJSONList.getJSONObject(i);
                     System.out.println("Object:::::" + reservationObject);
-                    SessionsObject newObject = new SessionsObject(reservationObject.getString("Slot"));
+                    SessionsObject newObject = new SessionsObject(reservationObject.getString("Slot"), reservationObject.getString("SlotStartTime"), reservationObject.getString("SlotEndTime"));
                     title[i] = reservationObject.getString("Slot");
                     System.out.println("Title:::::" + title[i]);
-                   // newObject.setSlot(reservationObject.getString("Slot"));
-                   // newObject.setSlotEndTime(reservationObject.isNull("SlotEndTime") ? "" : jsonObj.getString("SlotEndTime"));
-                    //newObject.setSlotStartTime(reservationObject.isNull("SlotStartTime") ? "" : jsonObj.getString("SlotStartTime"));
                     JSONArray customerJSONList = reservationObject.getJSONArray("customers");
                     ArrayList<CustomerInfoObject> customerInfoObjectArrayList = new ArrayList<CustomerInfoObject>();
                     for (int c = 0; c < customerJSONList.length(); c++) {
                         JSONObject customerObject = customerJSONList.getJSONObject(c);
-                        CustomerInfoObject customerInfoObject = new CustomerInfoObject(customerObject.getString("CustomerName"),customerObject.getString("MobileNo"),customerObject.getString("PAX"),customerObject.getString("ETA"),customerObject.getString("Status"),customerObject.getString("Record"));
+                        System.out.println("cust obj:::::" + customerObject);
+                        CustomerInfoObject customerInfoObject = new CustomerInfoObject(customerObject.getString("CustomerName"), customerObject.getString("MobileNo"), customerObject.getString("PAX"), customerObject.getString("ETA"), customerObject.getString("Status"),
+                                customerObject.getString("Record"), customerObject.getString("TNo"), customerObject.getString("Flag"), customerObject.getString("Occasion"));
                         customerInfoObjectArrayList.add(customerInfoObject);
                     }
                     newObject.setCustomers(customerInfoObjectArrayList);
