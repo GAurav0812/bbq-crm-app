@@ -5,8 +5,10 @@ package bbq.com.app.utils;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import bbq.com.app.ConfigureActivity;
 //import com.app.bbq.crm.ConfigureActivity;
 
 import java.util.HashMap;
@@ -90,10 +92,8 @@ public class SessionManager {
 
 
 
-    /**
-     * Clear session details
-     */
-   /* public void clearAccount() {
+
+    public void clearAccount() {
         // Clearing all data from Shared Preferences
         editor.clear();
         editor.apply();
@@ -109,5 +109,4 @@ public class SessionManager {
         // Staring Login Activity
         _context.startActivity(i);
     }
-*/
 }

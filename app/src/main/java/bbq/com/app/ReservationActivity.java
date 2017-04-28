@@ -2,22 +2,25 @@ package bbq.com.app;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.*;
 import bbq.com.app.utils.AsyncRequest;
+import bbq.com.app.utils.DetectConnection;
+import bbq.com.app.utils.SessionManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,13 +34,16 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    SessionManager sessionManager;
     ListView sessionListView;
     ArrayList<SessionsObject> sessionObjectArrayList;
     ArrayList<CustomerInfoObject> customerInfoObjectArrayList;
     private String[] title;
+    ProgressDialog pDialog;
     private int mYear, mMonth, mDay, mHour, mMinute;
     String txtDate;
     String date;
+    JSONArray unSyncArray = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,24 +62,13 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
 
 
 
-        date = (ImageView) findViewById(R.id.ic_calender);
-        date.setOnClickListener(this);
+        /*date = (ImageView) findViewById(R.id.ic_calender);
+        date.setOnClickListener(this);*/
         String address = "reservation.json";
         AsyncRequest requestList = new AsyncRequest(ReservationActivity.this, "GET");
         requestList.execute(address);
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -146,11 +141,59 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         return true;
     }
 
-/*    private void loadInfo(){
-        String address = "reservation.json" ;
-        AsyncRequest requestList = new AsyncRequest(ReservationActivity.this,"GET");
-        requestList.execute(address);
-    }*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.refresh_session:
+
+                try {
+                    AsyncRequest get = new AsyncRequest(ReservationActivity.this, "GET", "outlet");
+                    get.setPreloaderString("Syncing..");
+                    JSONObject respJSON = new JSONObject(sessionManager.getStoreDetails().get(SessionManager.OUTLET_DETAILS));
+                    get.execute("outlet/outletInfo/" + respJSON.getString("posStoreId"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                return true;
+            case R.id.reset_setting:
+            /*   if (getOfflineFeeds().length() > 0) {
+                    Toast tst = Toast.makeText(getApplicationContext(), "Reset not allowed! You have unsynced feedback.", Toast.LENGTH_LONG);
+                    tst.show();
+                    return false;
+                }*/
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
+                builder.setTitle("Account Reset Confirmation!");
+                builder.setMessage("The action is irreversible, all your offline data will get erased. Are you sure you want to reset the account?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String FILENAME = "offline_feed";
+                                try {
+                                    String imageName = "banner_";
+                                    JSONObject storedJSON = new JSONObject(sessionManager.getStoreDetails().get(SessionManager.OUTLET_DETAILS));
+                                    imageName += String.valueOf(storedJSON.getInt("id")) + ".png";
+                                    getApplicationContext().deleteFile(imageName);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                sessionManager.clearAccount();
+                                getApplicationContext().deleteFile(FILENAME);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     public void asyncResponse(String response, String label) {
 

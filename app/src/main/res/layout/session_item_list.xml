@@ -13,7 +13,7 @@
 
     <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.70"
+            android:layout_weight="0.60"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -40,7 +40,7 @@
 
     <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.30"
+            android:layout_weight="0.40"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_vertical">
@@ -61,6 +61,7 @@
                 android:id="@+id/txt_occasion"
                 android:textAllCaps="true"
                 android:textStyle="bold"
+
                 android:layout_gravity="end"/>
     </LinearLayout>
     <LinearLayout
@@ -74,8 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="18dp"
                 android:paddingRight="2dp"
-                android:src="@drawable/ic_arrived"
-        />
+                android:src="@drawable/ic_arrived"/>
     </LinearLayout>
 
     <LinearLayout

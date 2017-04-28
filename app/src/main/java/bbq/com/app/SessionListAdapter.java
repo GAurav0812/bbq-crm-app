@@ -1,11 +1,14 @@
 package bbq.com.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import bbq.com.app.pages.WebViewActivity;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,12 @@ public class SessionListAdapter extends BaseAdapter {
     public SessionListAdapter(ReservationListFragment sessionActivity, ArrayList<CustomerInfoObject> CustomerInfoObjectArrayList) {
         this.mContext = sessionActivity.getContext();
         this.customerInfoObjects = CustomerInfoObjectArrayList;
+
+
+    }
+
+    public SessionListAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
     @Override
@@ -37,25 +46,26 @@ public class SessionListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View convertView, ViewGroup parent) {
+    public View getView(final int i, View convertView, final ViewGroup parent) {
         View listView;
 
         final CustomerInfoObject CustomerInfoObject = customerInfoObjects.get(i);
 
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        listView = inflater.inflate(R.layout.session_item_list, null);
+        listView = inflater.inflate(R.layout.session_list_item, null);
 
 
         TextView customerName = (TextView) listView.findViewById(R.id.txt_cust_name);
         TextView pax = (TextView) listView.findViewById(R.id.txt_cust_pax);
-        TextView customerMobile = (TextView) listView.findViewById(R.id.txt_customer_mobile);
+        final TextView customerMobile = (TextView) listView.findViewById(R.id.txt_customer_mobile);
         TextView tno = (TextView) listView.findViewById(R.id.txt_tno);
         TextView occasion = (TextView) listView.findViewById(R.id.txt_occasion);
 
         customerName.setText(CustomerInfoObject.getCustomerName());
         pax.setText(CustomerInfoObject.getPAX());
         customerMobile.setText(CustomerInfoObject.getMobileNo());
+        final String mobile1 = customerMobile.getText().toString();
         tno.setText(CustomerInfoObject.getTNo());
         occasion.setText(CustomerInfoObject.getOccassion());
         listView.findViewById(R.id.ic_arrived).setVisibility(View.GONE);
@@ -65,7 +75,7 @@ public class SessionListAdapter extends BaseAdapter {
         if (CustomerInfoObject.getStatus().equals("Arrived")) {
             listView.findViewById(R.id.ic_arrived).setVisibility(View.VISIBLE);
         }
-        if (CustomerInfoObject.getStatus().equals("Expected") ) {
+        if (CustomerInfoObject.getStatus().equals("Expected")) {
             listView.findViewById(R.id.ic_expected).setVisibility(View.VISIBLE);
         }
         if (CustomerInfoObject.getStatus().equals("Seated")) {
@@ -74,6 +84,16 @@ public class SessionListAdapter extends BaseAdapter {
         if (CustomerInfoObject.getStatus().equals("Cancel")) {
             listView.findViewById(R.id.ic_cancel).setVisibility(View.VISIBLE);
         }
+
+
+        ImageView mobile = (ImageView) listView.findViewById(R.id.ic_mobile);
+        mobile.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(parent.getContext(), WebViewActivity.class);
+                intent.putExtra("mobileNo", mobile1);
+                parent.getContext().startActivity(intent);
+            }
+        });
         return listView;
     }
 }

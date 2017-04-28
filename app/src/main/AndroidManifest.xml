@@ -13,7 +13,8 @@
             android:supportsRtl="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,6 +36,8 @@
         </activity>
         <activity android:name=".ConfigureActivity"
                   android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".pages.WebViewActivity">
         </activity>
     </application>
 
