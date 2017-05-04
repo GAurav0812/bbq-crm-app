@@ -37,7 +37,9 @@
         <activity android:name=".ConfigureActivity"
                   android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".pages.WebViewActivity">
+        <activity android:name=".pages.WebViewActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme">
         </activity>
     </application>
 

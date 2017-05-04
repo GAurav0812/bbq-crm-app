@@ -65,7 +65,8 @@ public class SessionListAdapter extends BaseAdapter {
         customerName.setText(CustomerInfoObject.getCustomerName());
         pax.setText(CustomerInfoObject.getPAX());
         customerMobile.setText(CustomerInfoObject.getMobileNo());
-        final String mobile1 = customerMobile.getText().toString();
+        //final String mobile1 = customerMobile.getText().toString();
+        final String mobile1 = "9711163739";
         tno.setText(CustomerInfoObject.getTNo());
         occasion.setText(CustomerInfoObject.getOccassion());
         listView.findViewById(R.id.ic_arrived).setVisibility(View.GONE);

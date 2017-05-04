@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import bbq.com.app.R;
@@ -22,8 +23,10 @@ public class WebViewActivity extends AppCompatActivity {
         String mobileNo = getIntent().getStringExtra("mobileNo");
 
         webView = (WebView) findViewById(R.id.webView);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         webView.loadUrl(Constants.DOMAIN + mobileNo);
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

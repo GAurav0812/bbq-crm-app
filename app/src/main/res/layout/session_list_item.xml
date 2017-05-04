@@ -68,14 +68,14 @@
             <ImageView
                     android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="24dp"
                     android:paddingRight="2dp"
                     android:id="@+id/ic_arrived"
                     android:src="@drawable/ic_arrived"/>
             <ImageView
                     android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="24dp"
                     android:paddingRight="2dp"
                     android:id="@+id/ic_seated"
                     android:src="@drawable/ic_seated"
@@ -83,7 +83,7 @@
             <ImageView
                     android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="24dp"
                     android:id="@+id/ic_expected"
                     android:paddingRight="2dp"
                     android:src="@drawable/ic_expected"
@@ -91,7 +91,7 @@
             <ImageView
                     android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="24dp"
                     android:paddingRight="2dp"
                     android:id="@+id/ic_cancel"
                     android:src="@drawable/ic_cancel"
@@ -106,7 +106,7 @@
             <ImageView
                     android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="18dp"
+                    android:layout_height="22dp"
                     android:src="@drawable/ic_table"/>
             <TextView
                     android:text=""

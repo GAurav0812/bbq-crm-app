@@ -61,8 +61,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
-        /*date = (ImageView) findViewById(R.id.ic_calender);
+      /*  date = (ImageView) findViewById(R.id.ic_calender);
         date.setOnClickListener(this);*/
         String address = "reservation.json";
         AsyncRequest requestList = new AsyncRequest(ReservationActivity.this, "GET");
@@ -141,12 +140,12 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.refresh_session:
-
                 try {
                     AsyncRequest get = new AsyncRequest(ReservationActivity.this, "GET", "outlet");
                     get.setPreloaderString("Syncing..");
@@ -155,7 +154,6 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 return true;
             case R.id.reset_setting:
             /*   if (getOfflineFeeds().length() > 0) {
@@ -190,6 +188,24 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                 // Create the AlertDialog object and return it
                 builder.show();
                 return true;
+            case R.id.ic_calender:
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -1,123 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:weightSum="1"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-              android:layout_marginBottom="8dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white">
-
-    <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="0.60"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        <TextView
-                android:text=""
-                android:textSize="16sp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_customer_mobile"/>
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dip">
 
-        <TextView
-                android:text=" sdf"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_cust_name"/>
-        <TextView
-                android:text=""
-                android:textSize="15sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_cust_pax"/>
-    </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="0.40"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+    <LinearLayout android:id="@+id/thumbnail"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:padding="5dp"
+                  android:layout_alignParentLeft="true"
+                  android:background="@color/white"
+                  android:layout_marginRight="5dip">
 
-        <TextView
-                android:text=""
-                android:textSize="15sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_tno"
-                android:layout_gravity="end"/>
-
-        <TextView
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/txt_occasion"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-
-                android:layout_gravity="end"/>
-    </LinearLayout>
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/ic_arrived"
-            android:layout_gravity="end">
         <ImageView
-                android:adjustViewBounds="true"
+                android:id="@+id/ic_arrived"
                 android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:paddingRight="2dp"
-                android:src="@drawable/ic_arrived"/>
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/ic_seated"
-            android:layout_gravity="end">
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_arrived"
+                android:layout_gravity="center_vertical"/>
         <ImageView
-                android:adjustViewBounds="true"
+                android:id="@+id/ic_seated"
                 android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:paddingRight="2dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_seated"
-        />
-    </LinearLayout>
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/ic_expected"
-            android:layout_gravity="end">
+                android:layout_gravity="center_vertical"/>
         <ImageView
-                android:adjustViewBounds="true"
+                android:id="@+id/ic_expected"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:paddingRight="2dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_expected"
-        />
+                android:layout_gravity="center_vertical"/>
+        <ImageView
+                android:id="@+id/ic_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_cancel"
+                android:layout_gravity="center_vertical"/>
+
     </LinearLayout>
-    <LinearLayout
+
+    <!-- Title Of Song-->
+    <TextView
+            android:id="@+id/txt_customer_mobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/ic_cancel"
-            android:layout_gravity="end">
-        <ImageView
-                android:adjustViewBounds="true"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:paddingRight="2dp"
-                android:src="@drawable/ic_cancel"
-        />
-    </LinearLayout>
-</LinearLayout>
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="Mobile Number"
+            android:textColor="#040404"
+            android:typeface="sans"
+            android:textSize="15dip"
+            android:textStyle="bold"/>
+
+    <!-- Artist Name -->
+    <TextView
+            android:id="@+id/txt_cust_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_customer_mobile"
+            android:textColor="#343434"
+            android:textSize="10dip"
+            android:layout_marginTop="1dip"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="Customer Name"/>
+
+    <TextView
+            android:id="@+id/txt_cust_pax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/txt_customer_mobile"
+            android:gravity="right"
+            android:text="Arrival Time"
+            android:layout_marginRight="5dip"
+            android:textSize="10dip"
+            android:textColor="#10bcc9"
+            android:textStyle="bold"/>
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_arrow"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"/>
+
+</RelativeLayout>
