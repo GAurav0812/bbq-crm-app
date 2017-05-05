@@ -48,7 +48,7 @@ public class ConfigureActivity extends AppCompatActivity implements AsyncRequest
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configure);
+        setContentView(R.layout.acitivity_confgure_x);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Whitney-Book_1.otf")
                 .setFontAttrId(R.attr.fontPath)
@@ -60,10 +60,12 @@ public class ConfigureActivity extends AppCompatActivity implements AsyncRequest
             @Override
             public void onClick(View view) {
                 {
-                    String storeId = _storeId.getText().toString();
-                    String address = "outlet/outletInfo/" + storeId;
-                    AsyncRequest requestList = new AsyncRequest(ConfigureActivity.this, "GET");
-                    requestList.execute(address);
+                    if (validate()) {
+                        String storeId = _storeId.getText().toString();
+                        String address = "outlet/outletInfo/" + storeId;
+                        AsyncRequest requestList = new AsyncRequest(ConfigureActivity.this, "GET");
+                        requestList.execute(address);
+                    }
                 }
             }
 
@@ -84,6 +86,17 @@ public class ConfigureActivity extends AppCompatActivity implements AsyncRequest
         } else {
             showError("Error occurred while retrieving data!");
         }
+    }
+
+    public boolean validate() {
+        String storeId = _storeId.getText().toString();
+        _storeId.setError(null);
+        if (storeId.isEmpty()) {
+            _storeId.setError("Please enter store id");
+            _storeId.requestFocus();
+            return false;
+        }
+        return true;
     }
 }
 

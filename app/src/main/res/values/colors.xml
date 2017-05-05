@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!--  <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>-->
+    <!--  <color name="colorPrimary">#3F51B5</color>
+      <color name="colorPrimaryDark">#303F9F</color>-->
     <color name="colorAccent">#fc4513</color>
     <color name="green">#142800</color>
     <color name="yellowOrange">#ffce42</color>
@@ -23,4 +23,5 @@
     <color name="colorBackground">#eaf2f6</color>
     <color name="colorPrimaryDarker">#0f4e36</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="arrivedColor">#6ab038</color>
 </resources>

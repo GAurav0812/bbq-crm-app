@@ -20,11 +20,11 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
     ProgressDialog pDialog = null;
     String label;
     String _preloaderString = "Loading data...";
-    public static final String app_url = "http://webquiz.brainbout.in/";
+   //public static final String app_url = "http://webquiz.brainbout.in/";
     public static final String crm_url = "http://crm.bnhl.in/CRMProfile/profileui/#/";
 
-    //public static final String app_url = "http://feedback.bnhl.in/rest/";
-    //public static final String app_url = "http://bbq.theuniquemedia.in/rest/"
+   // public static final String app_url = "http://feedback.bnhl.in/rest/";
+    public static final String app_url = "http://barbeque.theuniquemedia.in/rest/";
     public AsyncRequest(Activity a, String m, String l) {
         caller = (OnAsyncRequestComplete) a;
         context = a;

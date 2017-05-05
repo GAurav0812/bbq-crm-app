@@ -50,7 +50,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         ImageView date;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_view);
-
+        sessionManager = new SessionManager(getApplicationContext());
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
@@ -63,7 +63,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
 
       /*  date = (ImageView) findViewById(R.id.ic_calender);
         date.setOnClickListener(this);*/
-        String address = "reservation.json";
+        String address = "../app/reservation.json";
         AsyncRequest requestList = new AsyncRequest(ReservationActivity.this, "GET");
         requestList.execute(address);
     }
@@ -156,27 +156,13 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                 }
                 return true;
             case R.id.reset_setting:
-            /*   if (getOfflineFeeds().length() > 0) {
-                    Toast tst = Toast.makeText(getApplicationContext(), "Reset not allowed! You have unsynced feedback.", Toast.LENGTH_LONG);
-                    tst.show();
-                    return false;
-                }*/
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
                 builder.setTitle("Account Reset Confirmation!");
-                builder.setMessage("The action is irreversible, all your offline data will get erased. Are you sure you want to reset the account?")
+                builder.setMessage("The action is irreversible, all your data will get erased. Are you sure you want to reset the account?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                String FILENAME = "offline_feed";
-                                try {
-                                    String imageName = "banner_";
-                                    JSONObject storedJSON = new JSONObject(sessionManager.getStoreDetails().get(SessionManager.OUTLET_DETAILS));
-                                    imageName += String.valueOf(storedJSON.getInt("id")) + ".png";
-                                    getApplicationContext().deleteFile(imageName);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
                                 sessionManager.clearAccount();
-                                getApplicationContext().deleteFile(FILENAME);
                                 finish();
                             }
                         })
@@ -185,7 +171,6 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                                 dialog.cancel();
                             }
                         });
-                // Create the AlertDialog object and return it
                 builder.show();
                 return true;
             case R.id.ic_calender:

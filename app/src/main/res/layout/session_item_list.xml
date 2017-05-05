@@ -78,7 +78,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@id/txt_customer_mobile"
             android:gravity="right"
-            android:text="Arrival Time"
+            android:text="Mobile Number"
             android:layout_marginRight="5dip"
             android:textSize="10dip"
             android:textColor="#10bcc9"
