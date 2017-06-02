@@ -54,25 +54,43 @@
     </LinearLayout>
     <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.60"
+            android:layout_weight="0.52"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="10dp">
-
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="start">
+            <TextView
+                    android:text=""
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@string/appbar_scrolling_view_behavior"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:gravity="left"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:id="@+id/txt_cust_name"/>
+            <ImageView
+                    android:adjustViewBounds="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingRight="5dp"
+                    android:id="@+id/ic_voucher"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_voucher"/>
+        </LinearLayout>
         <TextView
                 android:text=""
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@string/appbar_scrolling_view_behavior"
+                android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_customer_mobile"/>
-        <TextView
-                android:text=""
-                android:textSize="18dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_cust_name"/>
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,14 +124,13 @@
                     android:paddingLeft="5dp"
                     android:id="@+id/txt_occasion"
                     android:textAllCaps="true"
-
                     android:layout_gravity="start"/>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.35"
+            android:layout_weight="0.43"
             android:layout_height="wrap_content"
             android:orientation="vertical">
         <LinearLayout
@@ -151,34 +168,87 @@
                     android:layout_gravity="end">
                 <TextView
                         android:text="ETA : "
-                        android:textSize="15sp"
+                        android:textSize="14dp"
                         android:paddingLeft="10dp"
                         android:id="@+id/txt_eta"
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#10bcc9"
-                />
+                        android:textColor="#10bcc9"/>
                 <TextView
                         android:text=""
-                        android:textSize="15sp"
+                        android:textSize="14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#10bcc9"
                         android:layout_gravity="center_vertical"
                         android:id="@+id/txt_cust_eta"/>
+
+                <ImageView
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:paddingLeft="5dp"
+                        android:src="@drawable/ic_nonveg"
+                        android:id="@+id/ic_noVeg"
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"/>
+                <ImageView
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:paddingLeft="5dp"
+                        android:src="@drawable/ic_veg"
+                        android:id="@+id/ic_veg"
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"/>
+                <ImageView
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:paddingLeft="5dp"
+                        android:src="@drawable/ic_alcohol"
+                        android:id="@+id/ic_alocohol"
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"/>
+                <ImageView
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:paddingLeft="5dp"
+                        android:src="@drawable/ic_noalcohol"
+                        android:id="@+id/ic_noAlocohol"
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"/>
+                <ImageView
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:paddingLeft="5dp"
+                        android:src="@drawable/ic_family"
+                        android:id="@+id/ic_family"
+                        android:layout_gravity="center_vertical"/>
+                <ImageView
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:paddingLeft="5dp"
+                        android:tint="@color/colorBlack"
+                        android:src="@drawable/ic_appuser"
+                        android:id="@+id/ic_appUser"
+                        android:layout_gravity="center_vertical"/>
                 <ImageView
                         android:adjustViewBounds="true"
                         android:layout_width="wrap_content"
                         android:paddingLeft="5dp"
-                        android:layout_height="15dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_flag1"
                         android:id="@+id/ic_flag1"
                         android:layout_gravity="center_vertical"/>
                 <ImageView
                         android:adjustViewBounds="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="15dp"
+                        android:layout_height="16dp"
                         android:paddingLeft="5dp"
                         android:src="@drawable/ic_flag2"
                         android:visibility="gone"
@@ -187,7 +257,7 @@
                 <ImageView
                         android:adjustViewBounds="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="15dp"
+                        android:layout_height="16dp"
                         android:paddingLeft="5dp"
                         android:src="@drawable/ic_flag3"
                         android:id="@+id/ic_flag3"

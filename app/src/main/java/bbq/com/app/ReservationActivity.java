@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 public class ReservationActivity extends AppCompatActivity implements AsyncRequest.OnAsyncRequestComplete, View.OnClickListener {
@@ -36,6 +37,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     private ViewPager viewPager;
     SessionManager sessionManager;
     ListView sessionListView;
+    TextView current_date;
     ArrayList<SessionsObject> sessionObjectArrayList;
     ArrayList<CustomerInfoObject> customerInfoObjectArrayList;
     private String[] title;
@@ -80,6 +82,11 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
             sessionIndex.setArguments(bundle);
             adapter.addFragment(sessionIndex, sessionObjectArrayList.get(i).getSlot());
             viewPager.setAdapter(adapter);
+
+     /*       sessionObjectArrayList.get(i).getSlotStartTime().equals("")
+            int selectedTab = getIntent().getIntExtra("filterTicketTab", 1);
+            viewPager.setCurrentItem(selectedTab - 1);*/
+
         }
     }
 
@@ -137,9 +144,21 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_reservation_screen_settings, menu);
+        final MenuItem menuItem = menu.findItem(R.id.currentDate);
+        //current_date = (TextView) menuItem.getActionView();
+        // current_date = (TextView) findViewById(R.id.currentDate);
+        Date d = new Date();
+        Timestamp t = new Timestamp(d.getTime());
+        String date = format(t, "MMMM d, yyyy ");
+        // CharSequence s = DateFormat.format("MMMM d, yyyy ", d.getTime());
+        menuItem.setTitle(date);
         return true;
     }
 
+    public static String format(Timestamp value, String format) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(format, Locale.ENGLISH);
+        return dateFormatter.format(value.getTime());
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -191,6 +210,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -220,7 +240,9 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                         JSONObject customerObject = customerJSONList.getJSONObject(c);
                         System.out.println("cust obj:::::" + customerObject);
                         CustomerInfoObject customerInfoObject = new CustomerInfoObject(customerObject.getString("CustomerName"), customerObject.getString("MobileNo"), customerObject.getString("PAX"), customerObject.getString("ETA"), customerObject.getString("Status"),
-                                customerObject.getString("Record"), customerObject.getString("TNo"), customerObject.getString("Flag"), customerObject.getString("Occasion"));
+                                customerObject.getString("Record"), customerObject.getString("TNo"), customerObject.getString("Flag"), customerObject.getString("Occasion"),
+                                customerObject.getString("AppUser"), customerObject.getString("Alcohol"), customerObject.getString("MealPreference"), customerObject.getString("AccompaniedKids"),
+                                customerObject.getString("VisitsCount"),customerObject.getString("ActiveVouchers"));
                         customerInfoObjectArrayList.add(customerInfoObject);
                     }
                     newObject.setCustomers(customerInfoObjectArrayList);

@@ -7,6 +7,7 @@ import android.os.Parcelable;
  * Created by System4 on 4/20/2017.
  */
 public class CustomerInfoObject implements Parcelable {
+
     private String CustomerName;
     private String MobileNo;
     private String ETA;
@@ -17,6 +18,82 @@ public class CustomerInfoObject implements Parcelable {
     private String Record;
     private String Occassion;
     private String SpecialRemark;
+    private String AppUser;
+    private String Alcohol;
+    private String MealPreference;
+    private String AccompaniedKids;
+    private String VisitsCount;
+    private String ActiveVouchers;
+
+    @Override
+    public String toString() {
+        return "CustomerInfoObject{" +
+                "CustomerName='" + CustomerName + '\'' +
+                ", MobileNo='" + MobileNo + '\'' +
+                ", ETA='" + ETA + '\'' +
+                ", PAX='" + PAX + '\'' +
+                ", TNo='" + TNo + '\'' +
+                ", Status='" + Status + '\'' +
+                ", Flag='" + Flag + '\'' +
+                ", Record='" + Record + '\'' +
+                ", Occassion='" + Occassion + '\'' +
+                ", SpecialRemark='" + SpecialRemark + '\'' +
+                ", AppUser='" + AppUser + '\'' +
+                ", Alcohol='" + Alcohol + '\'' +
+                ", MealPreference='" + MealPreference + '\'' +
+                ", AccompaniedKids='" + AccompaniedKids + '\'' +
+                ", VisitsCount='" + VisitsCount + '\'' +
+                ", ActiveVouchers='" + ActiveVouchers + '\'' +
+                '}';
+    }
+    public String getActiveVouchers() {
+        return ActiveVouchers;
+    }
+
+    public void setActiveVouchers(String activeVouchers) {
+        ActiveVouchers = activeVouchers;
+    }
+
+    public String getAppUser() {
+        return AppUser;
+    }
+
+    public void setAppUser(String appUser) {
+        AppUser = appUser;
+    }
+
+    public String getAlcohol() {
+        return Alcohol;
+    }
+
+    public void setAlcohol(String alcohol) {
+        Alcohol = alcohol;
+    }
+
+    public String getMealPreference() {
+        return MealPreference;
+    }
+
+    public void setMealPreference(String mealPreference) {
+        MealPreference = mealPreference;
+    }
+
+    public String getAccompaniedKids() {
+        return AccompaniedKids;
+    }
+
+    public void setAccompaniedKids(String accompaniedKids) {
+        AccompaniedKids = accompaniedKids;
+    }
+
+    public String getVisitsCount() {
+        return VisitsCount;
+    }
+
+    public void setVisitsCount(String visitsCount) {
+        VisitsCount = visitsCount;
+    }
+
 
     public String getCustomerName() {
         return CustomerName;
@@ -98,21 +175,6 @@ public class CustomerInfoObject implements Parcelable {
         SpecialRemark = specialRemark;
     }
 
-    @Override
-    public String toString() {
-        return "CustomerInfoObject{" +
-                "CustomerName='" + CustomerName + '\'' +
-                ", MobileNo='" + MobileNo + '\'' +
-                ", ETA='" + ETA + '\'' +
-                ", PAX='" + PAX + '\'' +
-                ", TNo='" + TNo + '\'' +
-                ", Status='" + Status + '\'' +
-                ", Flag='" + Flag + '\'' +
-                ", Record='" + Record + '\'' +
-                ", Occassion='" + Occassion + '\'' +
-                ", SpecialRemark='" + SpecialRemark + '\'' +
-                '}';
-    }
 
     @Override
     public int describeContents() {
@@ -147,6 +209,12 @@ public class CustomerInfoObject implements Parcelable {
         Record = in.readString();
         Occassion = in.readString();
         SpecialRemark = in.readString();
+        AppUser = in.readString();
+        Alcohol = in.readString();
+        MealPreference = in.readString();
+        AccompaniedKids = in.readString();
+        VisitsCount = in.readString();
+        ActiveVouchers = in.readString();
     }
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(CustomerName);
@@ -159,12 +227,19 @@ public class CustomerInfoObject implements Parcelable {
         dest.writeString(Record);
         dest.writeString(Occassion);
         dest.writeString(SpecialRemark);
+        dest.writeString(AppUser);
+        dest.writeString(Alcohol);
+        dest.writeString(MealPreference);
+        dest.writeString(AccompaniedKids);
+        dest.writeString(VisitsCount);
+        dest.writeString(ActiveVouchers);
     }
 
 
 
 
-    public CustomerInfoObject(String customerName, String mobileNo, String PAX,String ETA, String status, String record,String TNo,String Flag,String Occassion) {
+    public CustomerInfoObject(String customerName, String mobileNo, String PAX,String ETA, String status, String record,String TNo,String Flag,String Occassion,String AppUser,String Alcohol,String MealPreference,
+                              String AccompaniedKids,String VisitsCount,String ActiveVouchers) {
         CustomerName = customerName;
         MobileNo = mobileNo;
         this.PAX = PAX;
@@ -174,5 +249,11 @@ public class CustomerInfoObject implements Parcelable {
         this.TNo = TNo;
         this.Flag = Flag;
         this.Occassion = Occassion;
+        this.AppUser = AppUser;
+        this.Alcohol = Alcohol;
+        this.MealPreference = MealPreference;
+        this.AccompaniedKids = AccompaniedKids;
+        this.VisitsCount = VisitsCount;
+        this.ActiveVouchers = ActiveVouchers;
     }
 }

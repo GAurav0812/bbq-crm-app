@@ -59,6 +59,7 @@ public class SessionListAdapter extends BaseAdapter {
 
 
         TextView customerName = (TextView) listView.findViewById(R.id.txt_cust_name);
+        customerName.setSelected(true);
         TextView pax = (TextView) listView.findViewById(R.id.txt_cust_pax);
         final TextView customerMobile = (TextView) listView.findViewById(R.id.txt_customer_mobile);
         TextView tno = (TextView) listView.findViewById(R.id.txt_tno);
@@ -85,6 +86,11 @@ public class SessionListAdapter extends BaseAdapter {
         listView.findViewById(R.id.ic_flag2).setVisibility(View.GONE);
         listView.findViewById(R.id.ic_flag3).setVisibility(View.GONE);
 
+        listView.findViewById(R.id.ic_alocohol).setVisibility(View.GONE);
+        listView.findViewById(R.id.ic_noAlocohol).setVisibility(View.GONE);
+        listView.findViewById(R.id.ic_veg).setVisibility(View.GONE);
+        listView.findViewById(R.id.ic_noVeg).setVisibility(View.GONE);
+
         if (CustomerInfoObject.getStatus().equals("Arrived")) {
             listView.findViewById(R.id.ic_arrived).setVisibility(View.VISIBLE);
             listView.findViewById(R.id.txt_eta).setVisibility(View.GONE);
@@ -104,6 +110,9 @@ public class SessionListAdapter extends BaseAdapter {
         }
         if (CustomerInfoObject.getStatus().equals("Cancel")) {
             listView.findViewById(R.id.ic_cancel).setVisibility(View.VISIBLE);
+            listView.findViewById(R.id.txt_eta).setVisibility(View.GONE);
+            eta.setText(CustomerInfoObject.getStatus());
+            eta.setTextColor(R.color.colorPrimary);
         }
         if (CustomerInfoObject.getFlag().equals("1")) {
             listView.findViewById(R.id.ic_flag1).setVisibility(View.VISIBLE);
@@ -114,6 +123,28 @@ public class SessionListAdapter extends BaseAdapter {
         if (CustomerInfoObject.getFlag().equals("3")) {
             listView.findViewById(R.id.ic_flag3).setVisibility(View.VISIBLE);
         }
+        if (CustomerInfoObject.getAlcohol().equals("true")) {
+            listView.findViewById(R.id.ic_alocohol).setVisibility(View.VISIBLE);
+        }else if(CustomerInfoObject.getAlcohol().equals("false")){
+            listView.findViewById(R.id.ic_noAlocohol).setVisibility(View.VISIBLE);
+        }
+
+        if (CustomerInfoObject.getMealPreference().equals("NONVEG")) {
+            listView.findViewById(R.id.ic_noVeg).setVisibility(View.VISIBLE);
+        }else if(CustomerInfoObject.getMealPreference().equals("VEG")){
+            listView.findViewById(R.id.ic_veg).setVisibility(View.VISIBLE);
+        }
+
+        if (CustomerInfoObject.getAppUser().equals("false")) {
+            listView.findViewById(R.id.ic_appUser).setVisibility(View.GONE);
+        }
+        if (CustomerInfoObject.getAccompaniedKids().equals("false")) {
+            listView.findViewById(R.id.ic_family).setVisibility(View.GONE);
+        }
+        if (CustomerInfoObject.getActiveVouchers().equals("false")) {
+            listView.findViewById(R.id.ic_voucher).setVisibility(View.GONE);
+        }
+
         if (CustomerInfoObject.getRecord().equals("No")) {
             listView.findViewById(R.id.ic_mobile).setVisibility(View.GONE);
         }
