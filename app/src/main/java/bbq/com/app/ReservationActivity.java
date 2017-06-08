@@ -69,8 +69,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         int year = now.get(Calendar.YEAR);
         int month = now.get(Calendar.MONTH) + 1; // Note: zero based!
         int day = now.get(Calendar.DAY_OF_MONTH);
-        //String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
-        String dateString = "20170610";
+        String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
         storeId = sessionManager.getStoreDetails().get(SessionManager.STORE_ID);
 
         getReservationResponse(dateString);
