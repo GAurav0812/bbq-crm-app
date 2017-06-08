@@ -24,4 +24,6 @@
     <color name="colorPrimaryDarker">#0f4e36</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="arrivedColor">#6ab038</color>
+    <color name="colorPurple">#9241cf</color>
+
 </resources>
