@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -36,6 +37,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     private TabLayout tabLayout;
     private ViewPager viewPager;
     SessionManager sessionManager;
+    private String storeId;
     ListView sessionListView;
     TextView current_date;
     ArrayList<SessionsObject> sessionObjectArrayList;
@@ -55,8 +57,6 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         sessionManager = new SessionManager(getApplicationContext());
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabTextColors(Color.parseColor("#ffffff"), Color.parseColor("#4cefe7"));
@@ -65,7 +65,19 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
 
       /*  date = (ImageView) findViewById(R.id.ic_calender);
         date.setOnClickListener(this);*/
-        String address = "../app/reservation.json";
+        Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR);
+        int month = now.get(Calendar.MONTH) + 1; // Note: zero based!
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        //String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
+        String dateString = "20170610";
+        storeId = sessionManager.getStoreDetails().get(SessionManager.STORE_ID);
+
+        getReservationResponse(dateString);
+    }
+
+    private void getReservationResponse(String date) {
+        String address = storeId + "/" + date;
         AsyncRequest requestList = new AsyncRequest(ReservationActivity.this, "GET");
         requestList.execute(address);
     }
@@ -74,20 +86,36 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        for (int i = 0; i < title.length; i++) {
-            Bundle bundle = new Bundle();
+        Date d = new Date();
+        Timestamp t = new Timestamp(d.getTime());
 
-            bundle.putParcelableArrayList("customerObjectArrayList", sessionObjectArrayList.get(i).getCustomers());
+        int i = 0;
+        int avtiveTab = 0;
+
+        for (SessionsObject s : sessionObjectArrayList) {
+           /* SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date parsedStartDate = null;
+            Date parsedEndDate = null;
+            try {
+                parsedStartDate = dateFormat.parse(s.getSlotStartTime());
+                parsedEndDate = dateFormat.parse(s.getSlotEndTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }*/
+            // Timestamp startDateTimeStamp = new java.sql.Timestamp(parsedStartDate.getTime());
+            //Timestamp endDateTimeStamp = new java.sql.Timestamp(parsedEndDate.getTime());
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("customerObjectArrayList", s.getCustomers());
             ReservationListFragment sessionIndex = new ReservationListFragment();
             sessionIndex.setArguments(bundle);
-            adapter.addFragment(sessionIndex, sessionObjectArrayList.get(i).getSlot());
+            adapter.addFragment(sessionIndex, s.getSlot());
             viewPager.setAdapter(adapter);
-
-     /*       sessionObjectArrayList.get(i).getSlotStartTime().equals("")
-            int selectedTab = getIntent().getIntExtra("filterTicketTab", 1);
-            viewPager.setCurrentItem(selectedTab - 1);*/
-
+            if (s.getIsActive().equals("true")) {
+                avtiveTab = i;
+            }
+            i++;
         }
+        viewPager.setCurrentItem(avtiveTab);
     }
 
     @Override
@@ -96,16 +124,10 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
             @Override
-            public void onDateSet(DatePicker view, int year,
-                                  int monthOfYear, int dayOfMonth) {
-
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -193,20 +215,20 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                 builder.show();
                 return true;
             case R.id.ic_calender:
+                sessionObjectArrayList = new ArrayList<>();
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
                     @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-
-                        txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        int yy = year;
+                        int month = monthOfYear + 1;
+                        int day = dayOfMonth;
+                        //txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
+                        getReservationResponse(dateString);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -219,10 +241,10 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     public void asyncResponse(String response, String label) {
 
         System.out.println("Resaponse:::::" + response);
+        customerInfoObjectArrayList = new ArrayList<CustomerInfoObject>();
         if (response != null) {
             try {
                 sessionObjectArrayList = new ArrayList<SessionsObject>();
-
                 JSONObject jsonObj = new JSONObject(response);
                 JSONArray reservationJSONList = jsonObj.getJSONArray("Sessions");
                 System.out.println("Session:::::" + reservationJSONList);
@@ -231,7 +253,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                 for (int i = 0; i < reservationJSONList.length(); i++) {
                     JSONObject reservationObject = reservationJSONList.getJSONObject(i);
                     System.out.println("Object:::::" + reservationObject);
-                    SessionsObject newObject = new SessionsObject(reservationObject.getString("Slot"), reservationObject.getString("SlotStartTime"), reservationObject.getString("SlotEndTime"));
+                    SessionsObject newObject = new SessionsObject(reservationObject.getString("Slot"), reservationObject.getString("SlotStartTime"), reservationObject.getString("SlotEndTime"), reservationObject.getString("IsActive"));
                     title[i] = reservationObject.getString("Slot");
                     System.out.println("Title:::::" + title[i]);
                     JSONArray customerJSONList = reservationObject.getJSONArray("customers");
@@ -242,7 +264,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                         CustomerInfoObject customerInfoObject = new CustomerInfoObject(customerObject.getString("CustomerName"), customerObject.getString("MobileNo"), customerObject.getString("PAX"), customerObject.getString("ETA"), customerObject.getString("Status"),
                                 customerObject.getString("Record"), customerObject.getString("TNo"), customerObject.getString("Flag"), customerObject.getString("Occasion"),
                                 customerObject.getString("AppUser"), customerObject.getString("Alcohol"), customerObject.getString("MealPreference"), customerObject.getString("AccompaniedKids"),
-                                customerObject.getString("VisitsCount"),customerObject.getString("ActiveVouchers"));
+                                customerObject.getString("VisitsCount"), customerObject.getString("ActiveVouchers"));
                         customerInfoObjectArrayList.add(customerInfoObject);
                     }
                     newObject.setCustomers(customerInfoObjectArrayList);

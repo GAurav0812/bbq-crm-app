@@ -20,11 +20,13 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
     ProgressDialog pDialog = null;
     String label;
     String _preloaderString = "Loading data...";
-   //public static final String app_url = "http://webquiz.brainbout.in/";
-    public static final String crm_url = "http://crm.bnhl.in/CRMProfile/profileui/#/";
+    //public static final String app_url = "http://webquiz.brainbout.in/";
+    public static final String crm_url = "http://crm.bnhl.in/CRMProfile/Service1.svc/GetReservations/";
 
-   // public static final String app_url = "http://feedback.bnhl.in/rest/";
+    // public static final String app_url = "http://feedback.bnhl.in/rest/";
     public static final String app_url = "http://barbeque.theuniquemedia.in/rest/";
+
+    //public static final String app_url = "http://crm.bnhl.in/CRMProfile/Service1.svc/GetReservations/";
     public AsyncRequest(Activity a, String m, String l) {
         caller = (OnAsyncRequestComplete) a;
         context = a;
@@ -117,17 +119,16 @@ public class AsyncRequest extends AsyncTask<String, Integer, String> {
 
     @SuppressWarnings("deprecation")
     private String get(String address) {
-        String[] crmAddress = address.split("-");
+        String[] crmAddress = address.split("/");
         String jsonString = new String();
         URL url;
         try {
             HttpURLConnection urlConnection = null;
-            if (crmAddress.length > 1) {
+            if (crmAddress.length == 2) {
                 url = new URL(crm_url + address);
             } else {
                 url = new URL(app_url + address);
             }
-
             urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setRequestMethod("GET");

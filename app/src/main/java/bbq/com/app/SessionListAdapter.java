@@ -11,7 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import bbq.com.app.pages.WebViewActivity;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
+
+import static bbq.com.app.ReservationActivity.format;
 
 /**
  * Created by System4 on 4/20/2017.
@@ -70,7 +74,8 @@ public class SessionListAdapter extends BaseAdapter {
         customerName.setText(CustomerInfoObject.getCustomerName());
         pax.setText(CustomerInfoObject.getPAX());
         customerMobile.setText(CustomerInfoObject.getMobileNo());
-        eta.setText(CustomerInfoObject.getETA());
+        String []etaDate = CustomerInfoObject.getETA().split(" ");
+        eta.setText(etaDate[1]);
         final String mobile1 = customerMobile.getText().toString();
 
         //final String mobile1 = "9711163739";
@@ -108,7 +113,7 @@ public class SessionListAdapter extends BaseAdapter {
             listView.findViewById(R.id.txt_eta).setVisibility(View.GONE);
             listView.findViewById(R.id.txt_cust_eta).setVisibility(View.GONE);
         }
-        if (CustomerInfoObject.getStatus().equals("Cancel")) {
+        if (CustomerInfoObject.getStatus().equals("Cancelled")) {
             listView.findViewById(R.id.ic_cancel).setVisibility(View.VISIBLE);
             listView.findViewById(R.id.txt_eta).setVisibility(View.GONE);
             eta.setText(CustomerInfoObject.getStatus());
@@ -125,13 +130,13 @@ public class SessionListAdapter extends BaseAdapter {
         }
         if (CustomerInfoObject.getAlcohol().equals("true")) {
             listView.findViewById(R.id.ic_alocohol).setVisibility(View.VISIBLE);
-        }else if(CustomerInfoObject.getAlcohol().equals("false")){
+        } else if (CustomerInfoObject.getAlcohol().equals("false")) {
             listView.findViewById(R.id.ic_noAlocohol).setVisibility(View.VISIBLE);
         }
 
         if (CustomerInfoObject.getMealPreference().equals("NONVEG")) {
             listView.findViewById(R.id.ic_noVeg).setVisibility(View.VISIBLE);
-        }else if(CustomerInfoObject.getMealPreference().equals("VEG")){
+        } else if (CustomerInfoObject.getMealPreference().equals("VEG")) {
             listView.findViewById(R.id.ic_veg).setVisibility(View.VISIBLE);
         }
 

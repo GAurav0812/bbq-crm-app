@@ -80,7 +80,13 @@ public class ConfigureActivity extends AppCompatActivity implements AsyncRequest
     @Override
     public void asyncResponse(String response, String label) {
         if (response != null && response.contains("SUCCESS")) {
-            sessionManager.configureStore(response);
+            try {
+                JSONObject jsonObj = new JSONObject(response);
+                String storeId=jsonObj.getString("posStoreId");
+                sessionManager.configureStore(response,storeId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
             startActivity(intent);
         } else {

@@ -35,7 +35,7 @@ public class SessionManager {
     public static final String DEVICE_ID = "deviceId";
     private static final String IS_STORE_ID = "IsStoreId";
     public static final String QUESTION_LIST = "OuestionList";
-
+    public static final String STORE_ID = "storeId";
 
     // Constructor
     public SessionManager(Context context) {
@@ -44,26 +44,23 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    /**
-     * Create login session
-     */
-    public void registerDevice(String deviceId){
+
+    public void registerDevice(String deviceId) {
         editor.putString(DEVICE_ID, deviceId);
         editor.apply();
     }
 
-    public void configureStore(String outletDetails) {
+    public void configureStore(String outletDetails, String storeId) {
         // Storing login value as TRUE
         editor.putBoolean(IS_STORE_ID, true);
-
+        editor.putString(STORE_ID, storeId);
         editor.putString(OUTLET_DETAILS, outletDetails);
-
         // commit changes
         editor.apply();
     }
 
-    public void configureQuestions(String questions) {
-        editor.putString(QUESTION_LIST, questions);
+    public void configureQuestions(String storeId) {
+
         // commit changes
         editor.apply();
     }
@@ -78,19 +75,16 @@ public class SessionManager {
     /**
      * Get stored session data
      */
-    public HashMap<String, String> getStoreDetails()
-    {
+    public HashMap<String, String> getStoreDetails() {
         HashMap<String, String> store = new HashMap<String, String>();
 
         store.put(OUTLET_DETAILS, pref.getString(OUTLET_DETAILS, null));
+        store.put(STORE_ID, pref.getString(STORE_ID, null));
         store.put(DEVICE_ID, pref.getString(DEVICE_ID, null));
-
         store.put(QUESTION_LIST, pref.getString(QUESTION_LIST, null));
 
         return store;
     }
-
-
 
 
     public void clearAccount() {

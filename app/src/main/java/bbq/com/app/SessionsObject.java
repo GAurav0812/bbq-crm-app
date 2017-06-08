@@ -13,16 +13,7 @@ public class SessionsObject implements Parcelable {
     private String Slot;
     private String SlotStartTime;
     private String SlotEndTime;
-    private ArrayList<CustomerInfoObject> customers;
-
-    public ArrayList<CustomerInfoObject> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(ArrayList<CustomerInfoObject> customers) {
-        this.customers = customers;
-    }
-
+    private String IsActive;
     public String getSlot() {
         return Slot;
     }
@@ -47,16 +38,39 @@ public class SessionsObject implements Parcelable {
         SlotEndTime = slotEndTime;
     }
 
+    public String getIsActive() {
+        return IsActive;
+    }
+
+    public void setIsActive(String isActive) {
+        IsActive = isActive;
+    }
+
+
+
+    private ArrayList<CustomerInfoObject> customers;
+
+    public ArrayList<CustomerInfoObject> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(ArrayList<CustomerInfoObject> customers) {
+        this.customers = customers;
+    }
+
+
+
+
     @Override
     public String toString() {
         return "SessionsObject{" +
                 "Slot='" + Slot + '\'' +
                 ", SlotStartTime='" + SlotStartTime + '\'' +
                 ", SlotEndTime='" + SlotEndTime + '\'' +
+                ", IsActive='" + IsActive + '\'' +
                 ", customers=" + customers +
                 '}';
     }
-
 
     public SessionsObject(Parcel in) {
         super();
@@ -79,6 +93,7 @@ public class SessionsObject implements Parcelable {
         Slot = in.readString();
         SlotStartTime = in.readString();
         SlotEndTime = in.readString();
+        IsActive = in.readString();
 
     }
 
@@ -90,12 +105,14 @@ public class SessionsObject implements Parcelable {
         dest.writeString(Slot);
         dest.writeString(SlotStartTime);
         dest.writeString(SlotEndTime);
+        dest.writeString(IsActive);
     }
 
-    public SessionsObject(String slot, String slotStartTime, String slotEndTime) {
+    public SessionsObject(String slot, String slotStartTime, String slotEndTime,String isActive) {
         Slot = slot;
         SlotStartTime = slotStartTime;
         SlotEndTime = slotEndTime;
+        IsActive = isActive;
     }
 
 }
