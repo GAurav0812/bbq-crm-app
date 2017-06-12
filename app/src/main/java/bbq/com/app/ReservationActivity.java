@@ -44,6 +44,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     TextView current_date;
     ArrayList<SessionsObject> sessionObjectArrayList;
     MenuItem menuItem;
+    private SimpleDateFormat dateFormatter;
     private String[] title;
     ProgressDialog pDialog;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -235,10 +236,16 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                         int yy = year;
                         int month = monthOfYear + 1;
                         int day = dayOfMonth;
-                        txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        //txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                         String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
                         getReservationResponse(dateString);
-                        menuItem.setTitle(dateString);
+
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year, monthOfYear, dayOfMonth);
+                        dateFormatter = new SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.ENGLISH);
+                        txtDate = dateFormatter.format(newDate.getTime());
+                        dateFormatter = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+                        menuItem.setTitle(dateFormatter.format(newDate.getTime()));
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
