@@ -27,8 +27,6 @@ public class SessionListAdapter extends BaseAdapter {
     public SessionListAdapter(ReservationListFragment sessionActivity, ArrayList<CustomerInfoObject> CustomerInfoObjectArrayList) {
         this.mContext = sessionActivity.getContext();
         this.customerInfoObjects = CustomerInfoObjectArrayList;
-
-
     }
 
     public SessionListAdapter(Context mContext) {
@@ -54,9 +52,7 @@ public class SessionListAdapter extends BaseAdapter {
     @Override
     public View getView(final int i, View convertView, final ViewGroup parent) {
         View listView;
-        final String record;
-        final CustomerInfoObject CustomerInfoObject = customerInfoObjects.get(i);
-        record = CustomerInfoObject.getRecord();
+        CustomerInfoObject CustomerInfoObject = customerInfoObjects.get(i);
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         listView = inflater.inflate(R.layout.session_list_item, null);
@@ -69,7 +65,7 @@ public class SessionListAdapter extends BaseAdapter {
         TextView tno = (TextView) listView.findViewById(R.id.txt_tno);
         TextView occasion = (TextView) listView.findViewById(R.id.txt_occasion);
         TextView eta = (TextView) listView.findViewById(R.id.txt_cust_eta);
-
+        listView.setTag(CustomerInfoObject.getRecord());
 
         customerName.setText(CustomerInfoObject.getCustomerName());
         pax.setText(CustomerInfoObject.getPAX());
@@ -157,6 +153,7 @@ public class SessionListAdapter extends BaseAdapter {
 
         listView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                String record = v.getTag().toString();
                 if (record.equals("Yes")) {
                     Intent intent = new Intent(parent.getContext(), WebViewActivity.class);
                     intent.putExtra("mobileNo", mobile1);

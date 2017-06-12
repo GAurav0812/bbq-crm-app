@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,10 +39,11 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     private ViewPager viewPager;
     SessionManager sessionManager;
     private String storeId;
+    private Menu menu;
     ListView sessionListView;
     TextView current_date;
     ArrayList<SessionsObject> sessionObjectArrayList;
-    ArrayList<CustomerInfoObject> customerInfoObjectArrayList;
+    MenuItem menuItem;
     private String[] title;
     ProgressDialog pDialog;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -84,7 +86,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
+        viewPager.setAdapter(null);
         Date d = new Date();
         Timestamp t = new Timestamp(d.getTime());
 
@@ -108,12 +110,14 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
             ReservationListFragment sessionIndex = new ReservationListFragment();
             sessionIndex.setArguments(bundle);
             adapter.addFragment(sessionIndex, s.getSlot());
-            viewPager.setAdapter(adapter);
+
             if (s.getIsActive().equals("true")) {
                 avtiveTab = i;
             }
             i++;
         }
+
+        viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(avtiveTab);
     }
 
@@ -132,7 +136,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         datePickerDialog.show();
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -157,6 +161,11 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         }
 
         @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
@@ -165,7 +174,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_reservation_screen_settings, menu);
-        final MenuItem menuItem = menu.findItem(R.id.currentDate);
+        menuItem = menu.findItem(R.id.currentDate);
         //current_date = (TextView) menuItem.getActionView();
         // current_date = (TextView) findViewById(R.id.currentDate);
         Date d = new Date();
@@ -182,7 +191,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.refresh_session:
@@ -214,6 +223,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                 builder.show();
                 return true;
             case R.id.ic_calender:
+
                 sessionObjectArrayList = new ArrayList<>();
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
@@ -225,9 +235,10 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                         int yy = year;
                         int month = monthOfYear + 1;
                         int day = dayOfMonth;
-                        //txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                         String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
                         getReservationResponse(dateString);
+                        menuItem.setTitle(dateString);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -237,10 +248,11 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         }
     }
 
+
+
     public void asyncResponse(String response, String label) {
 
         System.out.println("Resaponse:::::" + response);
-        customerInfoObjectArrayList = new ArrayList<CustomerInfoObject>();
         if (response != null) {
             try {
                 sessionObjectArrayList = new ArrayList<SessionsObject>();
