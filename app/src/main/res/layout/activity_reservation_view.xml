@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -7,16 +6,15 @@
         android:id="@+id/activity_reservation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:background="@drawable/bg"
-        android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context="bbq.com.app.ReservationActivity">
 
     <android.support.design.widget.TabLayout
             android:layout_below="@+id/ic_selectDate"
             android:id="@+id/tabs"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"
@@ -25,6 +23,10 @@
     <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_below="@+id/tabs"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_above="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
@@ -34,17 +36,364 @@
             android:orientation="horizontal"
             android:id="@+id/ic_selectDate"
             android:layout_gravity="end"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
-       <!-- <ImageView
-                android:adjustViewBounds="true"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:tint="@color/white"
-                android:paddingRight="5dp"
-                android:id="@+id/ic_calender"
-                android:src="@drawable/ic_calendar"/>-->
+            android:layout_alignParentTop="true">
     </LinearLayout>
 
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/no_data_icon"
+            android:visibility="gone">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="30dp"
+                android:layout_marginTop="40dp"
+                android:id="@+id/infoPanel6">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/access_denied"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/access_denied"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Check your internet connection and try again"
+                    android:id="@+id/textView"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colordarkgrey"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/infoPanel6"
+                android:gravity="center">
+            <Button
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:text="@string/retry"
+                    android:layout_gravity="center"
+                    android:id="@+id/button6"
+                    android:clickable="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    style="@style/RetryButton"/>
+            <Button
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="@string/network_setting"
+                    android:layout_gravity="center"
+                    android:id="@+id/button7"
+                    android:layout_marginLeft="5dp"
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    android:layout_marginRight="30dp"
+                    style="@style/RetryButton"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#FC0"
+            android:orientation="horizontal"
+            android:gravity="center">
+        <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="3dp"
+                        android:background="@drawable/border_right">
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:src="@drawable/ic_alcohol"
+                                android:id="@+id/ic_alocohol"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Liquor"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:src="@drawable/ic_noalcohol"
+                                android:id="@+id/ic_noAlocohol"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Soft Drink"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="3dp"
+                        android:background="@drawable/border_right">
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:src="@drawable/ic_veg"
+                                android:id="@+id/ic_veg"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Vegetarian"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:src="@drawable/ic_nonveg"
+                                android:id="@+id/ic_noVeg"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Non-Vegetarian"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="3dp"
+                        android:background="@drawable/border_right">
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:tint="@color/colorBlack"
+                                android:src="@drawable/ic_appuser"
+                                android:id="@+id/ic_appUser"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": App User"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:paddingLeft="5dp"
+                                android:src="@drawable/ic_restaurant"
+                                android:id="@+id/ic_table"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Seated"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="3dp"
+                        android:background="@drawable/border_right">
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:src="@drawable/ic_voucher"
+                                android:tint="#f5480a"
+                                android:id="@+id/ic_voucher"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Gift Voucher / Gif Coupon"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:src="@drawable/ic_family"
+                                android:id="@+id/ic_family"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": AccompaniedKids"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="3dp"
+                        android:background="@drawable/border_right">
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:text=""
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:textColor="#468e07"
+                                android:id="@+id/no_of_visits_text"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Number of visits"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <ImageView
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="17dp"
+                                android:paddingLeft="5dp"
+                                android:tint="#468e07"
+                                android:src="@drawable/ic_arrived"
+                                android:id="@+id/ic_arrived_icon"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Customer arrived"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="3dp"
+                        android:background="@drawable/border_right">
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:text="TN : 00"
+                                android:adjustViewBounds="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:textColor="#1070c9"
+                                android:id="@+id/table_no_text"
+                                android:layout_gravity="center_vertical"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text=": Table Number"
+                                android:textColor="#000"
+                                android:textSize="20sp"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
 </RelativeLayout>
+

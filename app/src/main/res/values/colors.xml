@@ -5,7 +5,8 @@
     <color name="colorAccent">#fc4513</color>
     <color name="green">#142800</color>
     <color name="yellowOrange">#ffce42</color>
-
+    <color name="colorGrey">#d3d3d3</color>
+    <color name="colordarkgrey">#6E7B8B</color>
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="oil">#333333</color>

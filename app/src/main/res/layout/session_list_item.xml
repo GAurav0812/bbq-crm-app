@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:weightSum="1"
               android:paddingTop="8dp"
@@ -28,28 +29,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:id="@+id/ic_arrived"
-                android:src="@drawable/ic_arrived"/>
-        <ImageView
-                android:adjustViewBounds="true"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_arrived"
+                android:background="@drawable/border_right"/>
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:id="@+id/ic_seated"
-                android:src="@drawable/ic_seated"
-        />
-        <ImageView
-                android:adjustViewBounds="true"
+                android:layout_height="wrap_content"
+                android:id="@+id/ic_seated_panel"
+                android:paddingRight="8dp"
+                android:background="@drawable/border_right">
+            <ImageView
+                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_restaurant"
+                    android:id="@+id/ic_seated"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:text="Points"
+                    android:textColor="#1070c9"
+                    android:id="@+id/txt_table_no"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:id="@+id/ic_expected"
-                android:src="@drawable/ic_expected"
-        />
-        <ImageView
-                android:adjustViewBounds="true"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:id="@+id/ic_cancel"
-                android:src="@drawable/ic_cancel"
-        />
+                android:layout_height="wrap_content"
+                android:id="@+id/no_of_visits_panel"
+                android:paddingRight="8dp"
+                android:background="@drawable/border_right">
+            <TextView
+                    android:adjustViewBounds="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textSize="30dp"
+                    android:textColor="#66c910"
+                    android:id="@+id/no_of_visits"
+            />
+        </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
@@ -74,13 +97,37 @@
                     android:singleLine="true"
                     android:gravity="left"
                     android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:id="@+id/txt_cust_name"/>
             <ImageView
                     android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:id="@+id/ic_excellent"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_excellent"/>
+            <ImageView
+                    android:adjustViewBounds="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingLeft="5dp"
+                    android:id="@+id/ic_good"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_good"/>
+            <ImageView
+                    android:adjustViewBounds="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingLeft="5dp"
+                    android:id="@+id/ic_poor"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_poor"/>
+            <ImageView
+                    android:adjustViewBounds="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingLeft="5dp"
                     android:id="@+id/ic_voucher"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_voucher"/>
@@ -139,35 +186,13 @@
                 android:orientation="horizontal"
                 android:id="@+id/ic_status_symbol"
                 android:layout_gravity="end">
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/txt_tno_icon"
-                    android:src="@drawable/ic_table"
-                    android:visibility="gone"
-                    android:adjustViewBounds="false"
-                    android:layout_marginTop="-3dp"
-                    android:cropToPadding="false"
-                    android:scaleType="center"/>
-            <TextView
-                    android:text=""
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:paddingLeft="5dp"
-                    android:visibility="gone"
-                    android:layout_marginTop="-3dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_tno"/>
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="end">
                 <TextView
-                        android:text="ETA : "
+                        android:text="Res.Time : "
                         android:textSize="14dp"
                         android:paddingLeft="10dp"
                         android:id="@+id/txt_eta"

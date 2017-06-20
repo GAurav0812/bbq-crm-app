@@ -24,6 +24,27 @@ public class CustomerInfoObject implements Parcelable {
     private String AccompaniedKids;
     private String VisitsCount;
     private String ActiveVouchers;
+    private String noofvisit;
+    private String smileyface;
+
+    public String getSmileyface() {
+        return smileyface;
+    }
+
+    public void setSmileyface(String smileyface) {
+        this.smileyface = smileyface;
+    }
+
+
+
+    public String getNoofvisit() {
+        return noofvisit;
+    }
+
+    public void setNoofvisit(String noofvisit) {
+        this.noofvisit = noofvisit;
+    }
+
 
     @Override
     public String toString() {
@@ -44,8 +65,14 @@ public class CustomerInfoObject implements Parcelable {
                 ", AccompaniedKids='" + AccompaniedKids + '\'' +
                 ", VisitsCount='" + VisitsCount + '\'' +
                 ", ActiveVouchers='" + ActiveVouchers + '\'' +
+                ", noofvisit='" + noofvisit + '\'' +
+                ", smileyface='" + smileyface + '\'' +
                 '}';
     }
+
+
+
+
     public String getActiveVouchers() {
         return ActiveVouchers;
     }
@@ -215,6 +242,8 @@ public class CustomerInfoObject implements Parcelable {
         AccompaniedKids = in.readString();
         VisitsCount = in.readString();
         ActiveVouchers = in.readString();
+        noofvisit = in.readString();
+        smileyface = in.readString();
     }
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(CustomerName);
@@ -233,13 +262,15 @@ public class CustomerInfoObject implements Parcelable {
         dest.writeString(AccompaniedKids);
         dest.writeString(VisitsCount);
         dest.writeString(ActiveVouchers);
+        dest.writeString(noofvisit);
+        dest.writeString(smileyface);
     }
 
 
 
 
     public CustomerInfoObject(String customerName, String mobileNo, String PAX,String ETA, String status, String record,String TNo,String Flag,String Occassion,String AppUser,String Alcohol,String MealPreference,
-                              String AccompaniedKids,String VisitsCount,String ActiveVouchers) {
+                              String AccompaniedKids,String VisitsCount,String ActiveVouchers,String noofvisit,String smileyface) {
         CustomerName = customerName;
         MobileNo = mobileNo;
         this.PAX = PAX;
@@ -255,5 +286,7 @@ public class CustomerInfoObject implements Parcelable {
         this.AccompaniedKids = AccompaniedKids;
         this.VisitsCount = VisitsCount;
         this.ActiveVouchers = ActiveVouchers;
+        this.noofvisit = noofvisit;
+        this.smileyface = smileyface;
     }
 }

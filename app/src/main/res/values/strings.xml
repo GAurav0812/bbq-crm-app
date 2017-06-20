@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CRMO</string>
+    <string name="retry">Retry</string>
+    <string name="network_setting">Network setting</string>
 </resources>

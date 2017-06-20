@@ -33,7 +33,6 @@ public class ReservationListFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_reservation_list, container, false);
         sessionListView = (ListView) view.findViewById(R.id.sessionListView);
 
-
         SessionListAdapter customAdapter = new SessionListAdapter(ReservationListFragment.this, customerArr);
         sessionListView.setAdapter(customAdapter);
         return view;

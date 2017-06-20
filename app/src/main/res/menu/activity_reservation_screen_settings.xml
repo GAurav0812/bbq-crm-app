@@ -5,19 +5,14 @@
             android:id="@+id/currentDate"
             android:title="Date"
             android:tint="@color/white"
-            android:background="@color/white"
             android:actionViewClass="android.widget.TextView"
             app:showAsAction="always|withText"/>
     <item
-            android:id="@+id/ic_calender"
-            android:icon="@drawable/ic_calendar"
-            android:title="Calendar"
-            android:tint="@color/white"
-            app:showAsAction="ifRoom"/>
-    <item
             android:id="@+id/refresh_session"
             android:title="Refresh"
-            app:showAsAction="never"
+            android:icon="@drawable/ic_refresh"
+            android:tint="@color/white"
+            app:showAsAction="ifRoom"
             android:orderInCategory="100"/>
 
     <item

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,7 @@ import bbq.com.app.utils.SessionManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -33,7 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-public class ReservationActivity extends AppCompatActivity implements AsyncRequest.OnAsyncRequestComplete, View.OnClickListener {
+public class ReservationActivity extends AppCompatActivity implements AsyncRequest.OnAsyncRequestComplete {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -41,15 +43,19 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     private String storeId;
     private Menu menu;
     ListView sessionListView;
+    TextView noofvisit;
+    TextView tableNumberLegend;
     TextView current_date;
     ArrayList<SessionsObject> sessionObjectArrayList;
     MenuItem menuItem;
     private SimpleDateFormat dateFormatter;
-    private String[] title;
     ProgressDialog pDialog;
     private int mYear, mMonth, mDay, mHour, mMinute;
     String txtDate;
     String date;
+    Typeface noOfVisitFont;
+    Typeface tableNumberFont;
+    LinearLayout noDataIcon;
     JSONArray unSyncArray = new JSONArray();
 
     @Override
@@ -57,7 +63,16 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         ImageView date;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_view);
+        noOfVisitFont = Typeface.createFromAsset(getAssets(), "fonts/Athletic.ttf");
+        tableNumberFont = Typeface.createFromAsset(getAssets(), "fonts/Athletic.ttf");
         sessionManager = new SessionManager(getApplicationContext());
+
+        noofvisit = (TextView) findViewById(R.id.no_of_visits_text);
+        tableNumberLegend = (TextView) findViewById(R.id.table_no_text);
+        noDataIcon = (LinearLayout) this.findViewById(R.id.no_data_icon);
+        noofvisit.setText("00");
+        noofvisit.setTypeface(noOfVisitFont);
+        tableNumberLegend.setTypeface(tableNumberFont);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -74,8 +89,8 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         int day = now.get(Calendar.DAY_OF_MONTH);
         String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
         storeId = sessionManager.getStoreDetails().get(SessionManager.STORE_ID);
-
-        getReservationResponse(dateString);
+        txtDate = dateString;
+        getReservationResponse(txtDate);
     }
 
     private void getReservationResponse(String date) {
@@ -90,52 +105,30 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
         viewPager.setAdapter(null);
         Date d = new Date();
         Timestamp t = new Timestamp(d.getTime());
-
-        int i = 0;
-        int avtiveTab = 0;
-
-        for (SessionsObject s : sessionObjectArrayList) {
-           /* SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Date parsedStartDate = null;
-            Date parsedEndDate = null;
-            try {
-                parsedStartDate = dateFormat.parse(s.getSlotStartTime());
-                parsedEndDate = dateFormat.parse(s.getSlotEndTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }*/
-            // Timestamp startDateTimeStamp = new java.sql.Timestamp(parsedStartDate.getTime());
-            //Timestamp endDateTimeStamp = new java.sql.Timestamp(parsedEndDate.getTime());
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("customerObjectArrayList", s.getCustomers());
-            ReservationListFragment sessionIndex = new ReservationListFragment();
-            sessionIndex.setArguments(bundle);
-            adapter.addFragment(sessionIndex, s.getSlot());
-
-            if (s.getIsActive().equals("true")) {
-                avtiveTab = i;
+        if (sessionObjectArrayList.size() != 0) {
+            int i = 0;
+            int avtiveTab = 0;
+            for (SessionsObject s : sessionObjectArrayList) {
+                if (s.getIsActive().equals("true")) {
+                    avtiveTab = i;
+                }
+                i++;
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("customerObjectArrayList", s.getCustomers());
+                ReservationListFragment sessionIndex = new ReservationListFragment();
+                sessionIndex.setArguments(bundle);
+                adapter.addFragment(sessionIndex, s.getSlot());
             }
-            i++;
+            viewPager.setAdapter(adapter);
+            viewPager.setCurrentItem(avtiveTab);
         }
 
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(avtiveTab);
+    }
+    private void noDataIconFunction(View view){
+        noDataIcon.setVisibility(view.VISIBLE);
+
     }
 
-    @Override
-    public void onClick(View view) {
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-            }
-        }, mYear, mMonth, mDay);
-        datePickerDialog.show();
-    }
 
     class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -196,14 +189,11 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
 
         switch (item.getItemId()) {
             case R.id.refresh_session:
-                try {
-                    AsyncRequest get = new AsyncRequest(ReservationActivity.this, "GET", "outlet");
-                    get.setPreloaderString("Syncing..");
-                    JSONObject respJSON = new JSONObject(sessionManager.getStoreDetails().get(SessionManager.OUTLET_DETAILS));
-                    get.execute("outlet/outletInfo/" + respJSON.getString("posStoreId"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                //AsyncRequest get = new AsyncRequest(ReservationActivity.this, "GET", "outlet");
+                //get.setPreloaderString("Syncing..");
+                getReservationResponse(txtDate);
+                //JSONObject respJSON = new JSONObject(sessionManager.getStoreDetails().get(SessionManager.OUTLET_DETAILS));
+                //get.execute("outlet/outletInfo/" + respJSON.getString("posStoreId"));
                 return true;
             case R.id.reset_setting:
 
@@ -223,7 +213,7 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                         });
                 builder.show();
                 return true;
-            case R.id.ic_calender:
+            case R.id.currentDate:
 
                 sessionObjectArrayList = new ArrayList<>();
                 final Calendar c = Calendar.getInstance();
@@ -239,13 +229,14 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
                         //txtDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                         String dateString = String.valueOf(year) + (month < 10 ? ("0" + month) : month) + (day < 10 ? ("0" + day) : day);
                         getReservationResponse(dateString);
-
+                        txtDate = dateString;
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
                         dateFormatter = new SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.ENGLISH);
-                        txtDate = dateFormatter.format(newDate.getTime());
+                        dateFormatter.format(newDate.getTime());
                         dateFormatter = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
                         menuItem.setTitle(dateFormatter.format(newDate.getTime()));
+
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -256,41 +247,35 @@ public class ReservationActivity extends AppCompatActivity implements AsyncReque
     }
 
 
-
     public void asyncResponse(String response, String label) {
-
-        System.out.println("Resaponse:::::" + response);
-        if (response != null) {
+        if (response!=null) {
             try {
                 sessionObjectArrayList = new ArrayList<SessionsObject>();
                 JSONObject jsonObj = new JSONObject(response);
                 JSONArray reservationJSONList = jsonObj.getJSONArray("Sessions");
-                System.out.println("Session:::::" + reservationJSONList);
-                title = new String[reservationJSONList.length()];
-
                 for (int i = 0; i < reservationJSONList.length(); i++) {
                     JSONObject reservationObject = reservationJSONList.getJSONObject(i);
-                    System.out.println("Object:::::" + reservationObject);
                     SessionsObject newObject = new SessionsObject(reservationObject.getString("Slot"), reservationObject.getString("SlotStartTime"), reservationObject.getString("SlotEndTime"), reservationObject.getString("IsActive"));
-                    title[i] = reservationObject.getString("Slot");
-                    System.out.println("Title:::::" + title[i]);
                     JSONArray customerJSONList = reservationObject.getJSONArray("customers");
                     ArrayList<CustomerInfoObject> customerInfoObjectArrayList = new ArrayList<CustomerInfoObject>();
                     for (int c = 0; c < customerJSONList.length(); c++) {
                         JSONObject customerObject = customerJSONList.getJSONObject(c);
-                        System.out.println("cust obj:::::" + customerObject);
                         CustomerInfoObject customerInfoObject = new CustomerInfoObject(customerObject.getString("CustomerName"), customerObject.getString("MobileNo"), customerObject.getString("PAX"), customerObject.getString("ETA"), customerObject.getString("Status"),
                                 customerObject.getString("Record"), customerObject.getString("TNo"), customerObject.getString("Flag"), customerObject.getString("Occasion"),
                                 customerObject.getString("AppUser"), customerObject.getString("Alcohol"), customerObject.getString("MealPreference"), customerObject.getString("AccompaniedKids"),
-                                customerObject.getString("VisitsCount"), customerObject.getString("ActiveVouchers"));
+                                customerObject.getString("VisitsCount"), customerObject.getString("ActiveVouchers"), customerObject.getString("noofvisit"), customerObject.getString("smileyface"));
                         customerInfoObjectArrayList.add(customerInfoObject);
                     }
                     newObject.setCustomers(customerInfoObjectArrayList);
                     sessionObjectArrayList.add(newObject);
                 }
-                System.out.println("array:::::" + title);
-                setupViewPager(viewPager);
-
+                if(sessionObjectArrayList.size()!=0){
+                    //setupViewPager(viewPager);
+                    noDataIconFunction(noDataIcon);
+                }else {
+                    //noDataIconFunction(noDataIcon);
+                    setupViewPager(viewPager);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
